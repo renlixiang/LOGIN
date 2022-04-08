@@ -1,6 +1,18 @@
-# select
+# login
 
-> A Vue.js project
+> A Vue + element UI project
+
+## module
+
+>登录模块，忘记密码， 新用户注册
+
+### 第一次提交
+
+1. element UI组件：input输入框（通用，密码），drawer抽屉
+
+2. vuex：存储用户的账号，密码，手机号（技术不太成熟）
+
+3.router：目前只有一个页面
 
 ## Build Setup
 
