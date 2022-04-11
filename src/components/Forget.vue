@@ -91,55 +91,69 @@ export default {
     accountIsNull: function () {
       if (this.inputAccount === '') {
         this.accountFlag = true
+      } else {
+        this.accountFlag = false
       }
     },
     passwordIsNull: function () {
       if (this.inputPassword === '') {
         this.passwordFlag = true
-      } else if (this.inputPassword.length < 7) {
-        this.$confirm('密码不能少于6位！')
+      } else if (this.inputPassword.length < 6) {
+        this.open('密码重置', '密码不能少于6位！')
+      } else {
+        this.passwordFlag = false
       }
     },
     phoneIsNull: function () {
+      let reg = /^1[345789][0-9]{9}$/
       if (this.inputPhone === '') {
         this.phoneFlag = true
+      } else if (!reg.test(this.inputPhone)) {
+        this.open('身份验证', '手机号无效！')
       } else {
-        let reg = /^1[345789][0-9]{9}$/
-        if (!reg.test(this.inputPhone)) {
-          this.$confirm('手机号无效！')
-        }
+        this.phoneFlag = false
       }
     },
     verifyPasswordIsNull: function () {
       if (this.inputVerifyPassword === '') {
         this.verifyPasswordFlag = true
+      } else {
+        this.verifyPasswordFlag = false
       }
     },
     provingUser: function () {
       if (this.$store.state.users.hasOwnProperty(this.inputAccount)) {
         if (this.$store.state.users[this.inputAccount].phone !== this.inputPhone) {
-          this.$confirm('手机号错误！')
+          this.open('身份验证', '手机号错误！')
         } else {
           this.innerDrawer = true
-          this.$confirm('身份验证成功')
+          this.open('身份验证', '身份验证成功')
         }
       } else {
-        this.$confirm('账户名错误！')
+        this.open('身份验证', '账户名错误！')
       }
     },
     checkPassword: function () {
-      if (this.inputPassword === this.inputVerifyPassword) {
-        this.$confirm('密码重置成功')
-        this.$store.state.users[this.inputAccount].password = this.inputPassword
+      if (this.verifyPasswordFlag || this.passwordFlag || this.inputPassword === '' || this.inputVerifyPassword === '') {
+        this.open('密码重置', '请检查密码！')
+      } else if (this.inputPassword !== this.inputVerifyPassword) {
+        this.open('密码重置', '两次密码不同，请重新设置密码！')
       } else {
-        this.$confirm('两次密码不同，请重新设置密码')
+        this.open('密码重置', '密码重置成功')
+        this.$store.state.users[this.inputAccount].password = this.inputPassword
       }
+    },
+    open: function (title, message) {
+      this.$alert(message, title, {
+        confirmButtonText: '确定'
+      })
     }
   }
 }
 </script>
 
 <style scoped>
+
 .account {
   display: flex;
   flex-wrap: wrap;
@@ -237,7 +251,7 @@ export default {
   margin-left: 70px;
   margin-top: 30px;
   width: 150px;
-  background-color: aquamarine;
-  color: cadetblue;
+/*  background-color: aquamarine;*/
+/*  color: cadetblue;*/
 }
 </style>

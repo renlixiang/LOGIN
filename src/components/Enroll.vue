@@ -81,43 +81,57 @@ export default {
     accountIsNull: function () {
       if (this.inputAccount === '') {
         this.accountFlag = true
+      } else {
+        this.accountFlag = false
       }
-      console.log(this.account)
     },
     passwordIsNull: function () {
       if (this.inputPassword === '') {
         this.passwordFlag = true
       } else if (this.inputPassword.length < 6) {
-        this.$confirm('密码不能少于6位！')
+        this.open('注册账号', '密码不能少于6位！')
+      } else {
+        this.passwordFlag = false
       }
     },
     phoneIsNull: function () {
+      let reg = /^1[345789][0-9]{9}$/
       if (this.inputPhone === '') {
         this.phoneFlag = true
+      } else if (!reg.test(this.inputPhone)) {
+        this.open('注册账号', '手机号无效！')
       } else {
-        let reg = /^1[345789][0-9]{9}$/
-        if (!reg.test(this.inputPhone)) {
-          this.$confirm('手机号无效！')
-        }
+        this.phoneFlag = false
       }
     },
     verifyPasswordIsNull: function () {
       if (this.inputVerifyPassword === '') {
         this.verifyPasswordFlag = true
+      } else if (this.inputPassword !== this.inputVerifyPassword) {
+        this.open('注册账号', '两次输入密码不相同！')
+      } else {
+        this.verifyPasswordFlag = false
       }
     },
     createAccount: function () {
-      if (this.inputAccount !== '' && this.inputPassword !== '' && this.inputPhone !== '' && this.inputVerifyPassword !== '') {
+      if (this.accountFlag || this.passwordFlag || this.phoneFlag || this.verifyPasswordFlag || this.inputPassword === '' || this.inputVerifyPassword === '') {
+        this.open('注册账号', '请检查所有输入项！')
+      } else {
         this.$store.state.users[this.inputAccount] = {
           phone: '',
           password: ''
         }
         this.$store.state.users[this.inputAccount].phone = this.inputPhone
         this.$store.state.users[this.inputAccount].password = this.inputPassword
-        alert('注册成功')
-      } else {
-        this.$confirm('请检查所有输入项！')
+        // alert('注册成功')
+        this.open('', '注册成功！')
+        // this.$confirm()
       }
+    },
+    open: function (title, message) {
+      this.$alert(message, title, {
+        confirmButtonText: '确定'
+      })
     }
   }
 }
@@ -221,7 +235,7 @@ export default {
   margin-left: 70px;
   margin-top: 30px;
   width: 150px;
-  background-color: aquamarine;
-  color: cadetblue;
+  /*background-color: aquamarine;*/
+  /*color: cadetblue;*/
 }
 </style>

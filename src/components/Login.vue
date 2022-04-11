@@ -95,7 +95,6 @@ export default {
       // loginFlag: true,
       // forgetFlag: true,
       changeFlag: true,
-      massage: ['账户名错误', '密码错误']
     }
   },
   // 自定义指令
@@ -111,12 +110,16 @@ export default {
     isAccountNull: function () {
       if (this.inputAccount === '') {
         this.accountFlag = true
+      } else {
+        this.accountFlag = false
       }
     },
     // 密码为空
     isPasswordNull: function () {
       if (this.inputPassword === '') {
         this.passwordFlag = true
+      } else {
+        this.passwordFlag = false
       }
     },
     checkUser: function () {
@@ -126,12 +129,12 @@ export default {
       if (this.$store.state.users.hasOwnProperty(this.inputAccount)) {
         // 判断密码
         if (this.$store.state.users[this.inputAccount].password !== this.inputPassword) {
-          this.$confirm('密码错误！')
+          this.open('', '密码错误')
         } else {
-          alert('欢迎进入')
+          this.open('', '欢迎进入')
         }
       } else {
-        this.$confirm('用户名错误！')
+        this.open('', '用户名错误')
       }
       // this.$store.commit('userIsExist')
     },
@@ -142,6 +145,11 @@ export default {
     createAccount: function () {
       this.changeFlag = false
       this.drawer = true
+    },
+    open: function (title, message) {
+      this.$alert(message, title, {
+        confirmButtonText: '确定'
+      })
     }
   }
 }
@@ -149,7 +157,8 @@ export default {
 
 <style scoped lang="less">
 #login {
-    background-color: floralwhite;
+    //background-color: floralwhite;
+  background-image: url("../assets/bgyulan.png");
     height: 100%;
     display: flex;
     //align-items: center;
@@ -162,9 +171,11 @@ export default {
         margin-left: 10px;
         margin-right: 10px;
         margin-top: 150px;
-        border: darkolivegreen solid 1px;
+        //border: darkolivegreen solid 1px;
         border-radius: 5px;
-        background-color: azure;
+        background-color: #f0f0f0;
+        //opacity: 0.8;
+        //box-shadow: 0 0 5px 5px #999999;
         //.head-sculpture {
         //    padding: 15px 30px 10px 30px;
         //}
@@ -231,8 +242,8 @@ export default {
             .forget{
                 .forget {
                   font-size: .5em;
-                  color: aquamarine;
-                  cursor: pointer;
+                  color: burlywood;
+                  //cursor: pointer;
                 }
                 padding-right: 35px;
                 width: 100px;
@@ -240,8 +251,8 @@ export default {
             .login{
                 .login {
                   font-size: .5em;
-                  color: aquamarine;
-                  cursor: pointer;
+                  color: burlywood;
+                  //cursor: pointer;
                 }
               width: 100px;
             }
@@ -250,8 +261,8 @@ export default {
             margin-left: 35px;
             margin-top: 10px;
             width: 150px;
-            background-color: mediumaquamarine;
-            color: cadetblue;
+            //background-color: lavenderblush;
+            //color: peachpuff;
         }
     }
 }
