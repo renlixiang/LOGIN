@@ -99,7 +99,7 @@ export default {
       if (this.inputPassword === '') {
         this.passwordFlag = true
       } else if (this.inputPassword.length < 6) {
-        this.open('密码重置', '密码不能少于6位！')
+        this.$common('密码重置', '密码不能少于6位！')
       } else {
         this.passwordFlag = false
       }
@@ -109,7 +109,7 @@ export default {
       if (this.inputPhone === '') {
         this.phoneFlag = true
       } else if (!reg.test(this.inputPhone)) {
-        this.open('身份验证', '手机号无效！')
+        this.$common('身份验证', '手机号无效！')
       } else {
         this.phoneFlag = false
       }
@@ -124,29 +124,24 @@ export default {
     provingUser: function () {
       if (this.$store.state.users.hasOwnProperty(this.inputAccount)) {
         if (this.$store.state.users[this.inputAccount].phone !== this.inputPhone) {
-          this.open('身份验证', '手机号错误！')
+          this.$common('身份验证', '手机号错误！')
         } else {
           this.innerDrawer = true
-          this.open('身份验证', '身份验证成功')
+          this.$common('身份验证', '身份验证成功')
         }
       } else {
-        this.open('身份验证', '账户名错误！')
+        this.$common('身份验证', '账户名错误！')
       }
     },
     checkPassword: function () {
       if (this.verifyPasswordFlag || this.passwordFlag || this.inputPassword === '' || this.inputVerifyPassword === '') {
-        this.open('密码重置', '请检查密码！')
+        this.$common('密码重置', '请检查密码！')
       } else if (this.inputPassword !== this.inputVerifyPassword) {
-        this.open('密码重置', '两次密码不同，请重新设置密码！')
+        this.$common('密码重置', '两次密码不同，请重新设置密码！')
       } else {
-        this.open('密码重置', '密码重置成功')
+        this.$common('密码重置', '密码重置成功')
         this.$store.state.users[this.inputAccount].password = this.inputPassword
       }
-    },
-    open: function (title, message) {
-      this.$alert(message, title, {
-        confirmButtonText: '确定'
-      })
     }
   }
 }

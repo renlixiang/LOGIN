@@ -89,7 +89,7 @@ export default {
       if (this.inputPassword === '') {
         this.passwordFlag = true
       } else if (this.inputPassword.length < 6) {
-        this.open('注册账号', '密码不能少于6位！')
+        this.$common('注册账号', '密码不能少于6位！')
       } else {
         this.passwordFlag = false
       }
@@ -99,7 +99,7 @@ export default {
       if (this.inputPhone === '') {
         this.phoneFlag = true
       } else if (!reg.test(this.inputPhone)) {
-        this.open('注册账号', '手机号无效！')
+        this.$common('注册账号', '手机号无效！')
       } else {
         this.phoneFlag = false
       }
@@ -108,14 +108,14 @@ export default {
       if (this.inputVerifyPassword === '') {
         this.verifyPasswordFlag = true
       } else if (this.inputPassword !== this.inputVerifyPassword) {
-        this.open('注册账号', '两次输入密码不相同！')
+        this.$common('注册账号', '两次输入密码不相同！')
       } else {
         this.verifyPasswordFlag = false
       }
     },
     createAccount: function () {
       if (this.accountFlag || this.passwordFlag || this.phoneFlag || this.verifyPasswordFlag || this.inputPassword === '' || this.inputVerifyPassword === '') {
-        this.open('注册账号', '请检查所有输入项！')
+        this.$common('注册账号', '请检查所有输入项！')
       } else {
         this.$store.state.users[this.inputAccount] = {
           phone: '',
@@ -124,14 +124,9 @@ export default {
         this.$store.state.users[this.inputAccount].phone = this.inputPhone
         this.$store.state.users[this.inputAccount].password = this.inputPassword
         // alert('注册成功')
-        this.open('', '注册成功！')
+        this.$common('', '注册成功！')
         // this.$confirm()
       }
-    },
-    open: function (title, message) {
-      this.$alert(message, title, {
-        confirmButtonText: '确定'
-      })
     }
   }
 }

@@ -94,7 +94,7 @@ export default {
       innerDrawer: false,
       // loginFlag: true,
       // forgetFlag: true,
-      changeFlag: true,
+      changeFlag: true
     }
   },
   // 自定义指令
@@ -129,12 +129,12 @@ export default {
       if (this.$store.state.users.hasOwnProperty(this.inputAccount)) {
         // 判断密码
         if (this.$store.state.users[this.inputAccount].password !== this.inputPassword) {
-          this.open('', '密码错误')
+          this.$common('', '密码错误')
         } else {
-          this.open('', '欢迎进入')
+          this.$common('', '欢迎进入')
         }
       } else {
-        this.open('', '用户名错误')
+        this.$common('', '用户名错误')
       }
       // this.$store.commit('userIsExist')
     },
@@ -145,11 +145,6 @@ export default {
     createAccount: function () {
       this.changeFlag = false
       this.drawer = true
-    },
-    open: function (title, message) {
-      this.$alert(message, title, {
-        confirmButtonText: '确定'
-      })
     }
   }
 }

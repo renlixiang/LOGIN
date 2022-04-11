@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 import ElementUI from 'element-ui'
 import './theme/index.css'
+import common from './js/common.js'
 // import 'element-ui/lib/theme-chalk/index.css'
 // import axios from 'axios'
 // import UUID from 'vue-uuid'
@@ -16,7 +17,7 @@ Vue.use(ElementUI)
 // Vue.use(axios)
 // Vue.use(UUID)
 // Vue.use(store)
-
+Vue.prototype.$common = common
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
